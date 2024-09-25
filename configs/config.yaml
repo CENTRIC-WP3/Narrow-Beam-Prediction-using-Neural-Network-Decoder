@@ -1,0 +1,183 @@
+################################
+#spatial BP flag.
+s_f : 1
+#spatial BP wide-narrow use case flag
+W_N: 1
+################################
+
+################################
+
+#CHANNEL type
+channelType: UMa
+
+#system random seed
+random_seed: 12345
+drop: 1
+
+# Model Directory
+ModelDirectory_spatial: Spatial
+
+
+# matlab data directory
+
+spatial_matlab_data_path: /projectsnbl/AHsim/qipzhu/AHsim/AH5Gsim/QIPING/beam_prediction/data/training/spatialDomain/rsrp/UMa/UMa_10UEspeed30_
+
+# python data directory
+spatial_load_data: 
+##########################################################
+#################Beam Codebok#############################
+##########################################################
+#beam codebook directory
+BeamCodebookPath: 
+
+
+#training beam codebook
+#choose from the options:
+#Narrow_16x16, Narrow_4x8, Narrow_4x8_32, Narrower,wideBeam_linear_8beams, wideBeam_linear_shift_8beams,wideBeam_hybrid_8beams,wideBeam_random_8beams
+TrainBeamcodebookName: Narrow_4x8 #narrow beam codebook
+TrainBeamcodebookName_narrow: Narrow_4x8
+TrainBeamcodebookName_wide: wideBeam_linear_shift_8beams #wide beam codebook
+
+#testing beam codebook
+TestBeamcodebookName: wideBeam_linear_8beams #Narrow_16x16, Narrow_4x8,Narrower
+##########################################################
+##########################################################
+
+##########################################################
+########Spatial BP data processing########################
+##########################################################
+#total sample data = UE_sample_num x UE_index_num
+#UE_sample_num: number of data drop
+#UE_index_num: number of UE per drop
+UE_sample_num: 4200
+UE_index_num: 10
+##########################################################
+##########################################################
+
+##########################################################
+########Training Parameters###############################
+##########################################################
+#data batch size
+Spatial_batch_size: 4200 # 1024/128 for 64 Set A
+Temporal_batch_size: 30 # 1024/128 for 64 Set A
+
+#spatial BP learning parameters
+spatial_lr: 0.01 #learning rate
+spatial_lr_gamma: 0.5 #step LR changing rate
+spatial_lr_change: 10000 #number of steps to change LR
+
+
+
+#loss
+loss: bce
+
+
+#spatial BP training iteration configuration
+epochIter: 6 #numhber of epoach
+print_iter: 100 #number of iteration to print out
+validation_itter: 2000 #number of iteration for validation
+
+spatial_READ_niter : 10000 # reading the number of iteration in test.py
+spatial_snapshot_save_iter: 5000 #number of iteration for saving models
+
+#temporal BP training iteration configuration
+temporal_READ_niter : 20000
+temporal_snapshot_save_iter: 10000
+##########################################################
+##########################################################
+
+#------------------------------------------------------------------------------
+#------------------------------------------------------------------------------
+#SPATIAL BP Configuration
+#------------------------------------------------------------------------------
+#------------------------------------------------------------------------------
+#UE side DL TX-RX beam prediction
+SetC_GT_flatD: 64 #total beam size for set C narrow beams
+SetC_image_shape_GT: [1,16,4] #2D beam grid shape
+
+#general DL TX BEAM shape
+GT_flatD: 64 #total beam size for set A narrow beams
+image_shape_GT: [1,16,4] #2D beam grid shape in training
+prediction_shape_GT: [1,16,4] #2D beam grid shape in testing
+
+#wide beam configuration
+wide_flatD: 8 #total beam size for set B wide beams
+#
+
+
+
+#subset of narrow beam selection
+narrowBeamMaskNum: 8 # the best # beams used at the loss function
+MaskFlag: 1
+TrainingMask: random #training beam pattern : uniform, random
+testMsk: random #testing beam pattern : uniform, random
+noMask: 1
+randomPatternNum: 4200 #
+#if it is uniform beam mask, define the sampling rate :2/4/8
+#if it is random mask, choose random rate
+TrainingSampleRate: random # 2,4,8,random(2,4)
+testSampleRate: 2 #2, 4 for TX, #16 for TX-RX
+testSampleRate_rxtx: 4 #2, 4 for Tx, #16 for TX-RX
+
+#data format
+# 1 for keeping the zeros for the unmeasured beams in the input,
+# 0 for not.
+keepZeros: 1
+
+#####################################
+#####################################
+#####################################
+#FNN parameter
+layerNum : 2 #multipler to control the dimension for Dense layer
+#lnum: 1
+#attention flag
+#attention: False
+#####################################
+#####################################
+#####################################
+#for CNN parameters
+#CNNFlag: 0
+ChannelNum: 16 #CNN channel number
+CNNHiddenlayerNum: 4 #not used
+FNNHiddenLayerNum: 2 #not used
+
+# for 1105 tx-rx beams##############
+#CNN with different kernal parameters
+#kernal 1
+convParam1: [6,2,1,1] #kernel, stride, padding,dialtion
+convParam2: [3,2,1,1]
+convParam3: [3,1,1,1]
+
+#kernal h_channel
+convParamH_1: [14,1,0,1] #for H dimension
+convParamH_2: [4,4,0,1]  #for W dimension
+
+
+#kernal w_channel
+convParamW_1: [2,1,0,1] #for H dimension
+convParamW_2: [16,9,0,2]  #for W dimension
+
+
+# for 64 tx beams##############
+#CNN with different kernal parameters
+#channel 1
+A_convParam1: [3,1,1,1] #kernel, stride, padding,dialtion
+A_convParam2: [3,1,1,1]
+A_convParam3: [3,1,1,1]
+
+#channel h_channel
+A_convParamH_1: [4,1,0,1] #for H dimension
+A_convParamH_2: [8,1,0,1]  #for W dimension
+
+
+#channel w_channel
+A_convParamW_1: [2,1,0,1] #for H dimension
+A_convParamW_2: [16,1,0,1] #for W dimension
+##########################################################
+########Test parameters##################################
+##########################################################
+#performance metric
+prediction_bestbeam: 4 #number of best # beams in testing
+
+
+
