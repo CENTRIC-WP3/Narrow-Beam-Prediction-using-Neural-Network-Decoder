@@ -44,7 +44,6 @@ This repo contains the source code for refined beam prediction with wide-beam-me
 
 We examine three wide beam codebook designs: the common codebook for wide beam codebook design (WB) , wide beam codebook design incorporating a circular-shift operation (CSWB) , and wide beam codebook design featuring partial random coding (PR-WB). For the decoding technique, we consider two methods: the proposed ML-based decoder and the non-ML method (DD). As illustrated in Fig.1, the cumulative distribution function (CDF) of eRSRP is computed using the testing data. Additionally, the y-axis value at eRSRP∼=0 dB indicates the prediction accuracy. The results indicate that: (1) the ML decoder significantly outperforms DD across all wide beam codebook designs; (2) the proposed CSWB and PR-WB models surpass the WB for each decoder method; (3) In our configuration, CS-WB with DD and PR-WB with DD demonstrate comparable performance to WB withML, highlighting the importance of the wide beam design for refined beam prediction.
 
-![A graph of different colored lines
+![image](https://github.com/user-attachments/assets/29238747-9fff-4707-8a9a-006b8c24ad0f)
 
-Description automatically generated](file:///C:/Users/amahmadi/AppData/Local/Temp/msohtmlclip1/01/clip_image002.jpg)
 
